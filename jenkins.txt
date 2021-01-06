@@ -28,7 +28,7 @@
 1:KerBalloons, KerBalloons.version
 
 # 2:PROJNAME, PROJFILE, VERSIONFILE, PLUGINSFOLDER
-2:KerBalloons,KerBalloons/Kerballoons.csproj,KerBalloons.version,GameData/KerBalloons/Plugins
+2:KerBalloons,Kerballoons/KerBalloons.csproj,KerBalloons.version,GameData/KerBalloons/Plugins
 
 # 3:SOURCEFILE, DESTDIR
 3:KerBalloons.version,GameData/KerBalloons
