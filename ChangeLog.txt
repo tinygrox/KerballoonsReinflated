@@ -1,0 +1,18 @@
+ChangeLog
+
+0.5.0
+	Replaced www code to load icons from disk with ToolbarControl.LoadImageFromFile
+	Fixed all attachment nodes in all parts
+	Added in 4.4 specific code from the 4.4 release downloaded from CurseForge
+	Changed icon_on color from grey to green
+	In GetInfo, removed hard-coded gravity settings, now updates ggravity from FlightGlobals
+	Converted mdm to dds
+	Created module which uses B9PartSwitcher to be able to change the size of a single balloon
+	Created window to allow destination planet and payload to be selected.
+	Added InstallChecker
+	Added AssemblyVersion.tt
+	New dependencies
+		ClickThroughBlocker
+		ToolbarController
+		B9PartSwitch
+		SpaceTuxLibrary

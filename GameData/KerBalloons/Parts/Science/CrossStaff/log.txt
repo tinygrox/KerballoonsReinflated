@@ -1,0 +1,7 @@
+-----
+Folder infos : 
+MBM files count : 3
+TGA files count : 0
+PNG files count : 0
+Backup files count : 0
+-----

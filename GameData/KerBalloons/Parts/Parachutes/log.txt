@@ -1,0 +1,3 @@
+LOG : Opening file : D:\Users\jbb\github\KerballoonsReinflated\GameData\KerBalloons\Parts\Parachutes\KerBalloonsChuteTex.mbm
+LOG : Converting D:\Users\jbb\github\KerballoonsReinflated\GameData\KerBalloons\Parts\Parachutes\KerBalloonsChuteTex.mbm to D:\Users\jbb\github\KerballoonsReinflated\GameData\KerBalloons\Parts\Parachutes\KerBalloonsChuteTex.dds
+    Format : Dxt1, normalmap : False, res: 512x128

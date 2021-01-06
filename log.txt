@@ -1,0 +1,61 @@
+-----
+Folder infos : 
+MBM files count : 3
+TGA files count : 0
+PNG files count : 0
+Backup files count : 0
+-----
+-----
+Starting conversion of 3 files.
+    MBM count : 3.
+    TGA count : 0.
+    PNG count : 0.
+0 files excluded, 0 files without mipmaps. 0 files will skip normal detection.0 files will not be resized.
+-----
+LOG : Converting D:\Users\jbb\github\KerballoonsReinflated\GameData\KerBalloons\Parts\Science\Recorder\Arm.mbm to D:\Users\jbb\github\KerballoonsReinflated\GameData\KerBalloons\Parts\Science\Recorder\Arm.dds
+    Format : Dxt1, normalmap : False, res: 128x128
+---
+LOG : Converting D:\Users\jbb\github\KerballoonsReinflated\GameData\KerBalloons\Parts\Science\Recorder\Cover.mbm to D:\Users\jbb\github\KerballoonsReinflated\GameData\KerBalloons\Parts\Science\Recorder\Cover.dds
+    Format : Dxt5, normalmap : False, res: 512x512
+---
+LOG : Converting D:\Users\jbb\github\KerballoonsReinflated\GameData\KerBalloons\Parts\Science\Recorder\Drum.mbm to D:\Users\jbb\github\KerballoonsReinflated\GameData\KerBalloons\Parts\Science\Recorder\Drum.dds
+    Format : Dxt5, normalmap : False, res: 512x512
+---
+-----
+Conversion done! 3 files processed in 264.8195ms.
+-----
+-----
+Folder infos : 
+MBM files count : 6
+TGA files count : 0
+PNG files count : 0
+Backup files count : 3
+-----
+-----
+Starting conversion of 6 files.
+    MBM count : 6.
+    TGA count : 0.
+    PNG count : 0.
+0 files excluded, 0 files without mipmaps. 0 files will skip normal detection.0 files will not be resized.
+-----
+LOG : Converting D:\Users\jbb\github\KerballoonsReinflated\GameData\KerBalloons\Parts\UniversalBalloon\KBTexDuna.mbm to D:\Users\jbb\github\KerballoonsReinflated\GameData\KerBalloons\Parts\UniversalBalloon\KBTexDuna.dds
+    Format : Dxt5, normalmap : False, res: 1024x1024
+---
+LOG : Converting D:\Users\jbb\github\KerballoonsReinflated\GameData\KerBalloons\Parts\UniversalBalloon\KBTexEve.mbm to D:\Users\jbb\github\KerballoonsReinflated\GameData\KerBalloons\Parts\UniversalBalloon\KBTexEve.dds
+    Format : Dxt5, normalmap : False, res: 1024x1024
+---
+LOG : Converting D:\Users\jbb\github\KerballoonsReinflated\GameData\KerBalloons\Parts\UniversalBalloon\KBTexKerbin.mbm to D:\Users\jbb\github\KerballoonsReinflated\GameData\KerBalloons\Parts\UniversalBalloon\KBTexKerbin.dds
+    Format : Dxt5, normalmap : False, res: 1024x1024
+---
+LOG : Converting D:\Users\jbb\github\KerballoonsReinflated\GameData\KerBalloons\Parts\UniversalBalloon\KBTexLaythe.mbm to D:\Users\jbb\github\KerballoonsReinflated\GameData\KerBalloons\Parts\UniversalBalloon\KBTexLaythe.dds
+    Format : Dxt5, normalmap : False, res: 1024x1024
+---
+LOG : Converting D:\Users\jbb\github\KerballoonsReinflated\GameData\KerBalloons\Parts\Science\Sundial\Cylinder1_auv.mbm to D:\Users\jbb\github\KerballoonsReinflated\GameData\KerBalloons\Parts\Science\Sundial\Cylinder1_auv.dds
+    Format : Dxt5, normalmap : False, res: 128x128
+---
+LOG : Converting D:\Users\jbb\github\KerballoonsReinflated\GameData\KerBalloons\Parts\Science\Sundial\Cylinder2_auv.mbm to D:\Users\jbb\github\KerballoonsReinflated\GameData\KerBalloons\Parts\Science\Sundial\Cylinder2_auv.dds
+    Format : Dxt1, normalmap : False, res: 128x128
+---
+-----
+Conversion done! 6 files processed in 1180.4685ms.
+-----
