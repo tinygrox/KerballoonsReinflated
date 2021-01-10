@@ -115,11 +115,11 @@ namespace KerBalloons
             }
             if (HighLogic.LoadedSceneIsFlight)
             {
-                balloonObject = getChildGameObject(this.part.gameObject, CFGballoonObject, balloonSize);
-                ropeObject = getChildGameObject(this.part.gameObject, CFGropeObject, balloonSize);
-                capObject = getChildGameObject(this.part.gameObject, CFGcapObject, balloonSize);
-                liftPointObject = getChildGameObject(this.part.gameObject, CFGliftPointObject, balloonSize);
-                balloonPointObject = getChildGameObject(this.part.gameObject, CFGballoonPointObject, balloonSize);
+                balloonObject = getChildGameObject(this.part.gameObject, CFGballoonObject, 0); // balloonSize);
+                ropeObject = getChildGameObject(this.part.gameObject, CFGropeObject, 0); //balloonSize);
+                capObject = getChildGameObject(this.part.gameObject, CFGcapObject, 0); //balloonSize);
+                liftPointObject = getChildGameObject(this.part.gameObject, CFGliftPointObject, 0); //balloonSize);
+                balloonPointObject = getChildGameObject(this.part.gameObject, CFGballoonPointObject, 0); //balloonSize);
 
                 balloonObject.transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
 

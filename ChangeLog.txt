@@ -1,5 +1,8 @@
 ChangeLog
 
+0.5.0.1 (unreleased)
+	Removed  3 .mu files, now having B9 do the rescaling
+
 0.5.0
 	Replaced www code to load icons from disk with ToolbarControl.LoadImageFromFile
 	Fixed all attachment nodes in all parts
