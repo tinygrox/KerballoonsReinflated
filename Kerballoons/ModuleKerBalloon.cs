@@ -111,7 +111,6 @@ namespace KerBalloons
                 planetSwitch.Events["ShowSubtypesWindow"].guiActiveEditor = false;
                 bodyName = recommendedBody;
                 UpdatePersistentData();
-
             }
             if (HighLogic.LoadedSceneIsFlight)
             {
@@ -145,6 +144,26 @@ namespace KerBalloons
                     isInflated = false;
                     isDeflating = false;
                     isRepacked = false;
+                }
+
+                if (!isInflated && !isInflating && !isDeflating && !isRepacked)
+                {
+                    Events["repackBalloon"].active = true;
+                }
+                if (isInflated)
+                {
+                    Log.Info("isInflated");
+                    Events["inflateBalloon"].active = false;
+                    Events["deflateBalloon"].active = true;
+                    balloonObject.SetActive(true);
+                    ropeObject.SetActive(true);
+                    capObject.SetActive(false);
+
+
+                    ropeObject.transform.rotation = Quaternion.Slerp(ropeObject.transform.rotation, Quaternion.LookRotation(vessel.upAxis, vessel.upAxis), BalloonProperties.getLift(this) / 10);
+                    ropeObject.transform.localScale = new Vector3(1, 1, 1);
+
+
                 }
             }
         }

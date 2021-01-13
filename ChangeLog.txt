@@ -1,5 +1,8 @@
 ChangeLog
 
+0.5.0.3
+	Fixed missing rope when returning to vessel  (using AirPark)
+
 0.5.0.2
 	Fixed calculations of max lift
 	Added the min lift at max altitude
