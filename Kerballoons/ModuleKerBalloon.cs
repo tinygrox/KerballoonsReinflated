@@ -189,15 +189,34 @@ namespace KerBalloons
             }
         }
 
+        float GetBodyG(string bodyName)
+        {
+            float bodyG = 0;
+            if (HighLogic.LoadedSceneIsEditor || HighLogic.LoadedSceneIsFlight)
+            {
+                var body = FlightGlobals.Bodies.Find(x => x.bodyName == bodyName);
+                if (body == null)
+                {
+                    Log.Info("Cannot find recommended body");
+                    bodyG = (float)PhysicsGlobals.GravitationalAcceleration;
+                }
+                else
+                    bodyG = (float)body.GeeASL * (float)PhysicsGlobals.GravitationalAcceleration;
+            } else bodyG =                 (float)PhysicsGlobals.GravitationalAcceleration;
+            return bodyG;
+        }
         void SetValues(BalloonInfo b)
         {
             Log.Info("SetValues");
+            Log.Info("payload: " + b.payload + ", body: " + b.recommendedBody + ", techRequired: " + b.techRequired +
+                ", minAtmoP: " + b.minAtmoPressure.ToString("F3") + ", maxAtmoP: " + b.maxAtmoPressure.ToString("F3") +
+                ", minScale: " + b.minScale + ", maxScale: " + b.maxScale + ", minLift: " + b.minLift + ", maxLift: " + b.maxLift +
+                ", speedlimiter: " + b.speedLimiter + ", maxSpeed: " + b.maxSpeed + ", maxSpeedTolerence: " + b.maxSpeedTolerence +
+                ", speedAdjustMin: " + b.speedAdjustMin + ", speedAdjustMax: " + b.speedAdjustMax);
+
             recommendedBody = b.recommendedBody;
-            var body = FlightGlobals.Bodies.Find(x => x.bodyName == b.recommendedBody);
-            if (body == null)
-                Log.Info("Cannot find recommended body");
-            bodyG = (float)body.GeeASL;
-            Log.Info("recommendedBody: " + b.recommendedBody + ", bodyName: " + body.bodyName + ", bodyG: " + bodyG);
+            bodyG = GetBodyG(recommendedBody);
+            Log.Info("recommendedBody: " + b.recommendedBody + ", bodyName: " + recommendedBody + ", bodyG: " + bodyG);
             minAtmoPressure = b.minAtmoPressure;
             maxAtmoPressure = b.maxAtmoPressure;
             minScale = b.minScale;
@@ -258,7 +277,7 @@ namespace KerBalloons
                 planetSwitch.SwitchSubtype(bodyName);
                 availPayloads.Clear();
                 changed = true;
-                Log.Info("Planet changed, selectedPlanet : "+ selectedPlanet + ", recommendedBody: " + recommendedBody + ", bodyName: " + bodyName);
+                Log.Info("Planet changed, selectedPlanet : " + selectedPlanet + ", recommendedBody: " + recommendedBody + ", bodyName: " + bodyName);
             }
             GUILayout.EndVertical();
 
@@ -314,8 +333,8 @@ namespace KerBalloons
                 if (sizeDict.ContainsKey(key))
                 {
                     var binfo = sizeDict[key];
-                   // if (binfo.recommendedBody != recommendedBody)
-                        SetValues(binfo);
+                    // if (binfo.recommendedBody != recommendedBody)
+                    SetValues(binfo);
                 }
                 else
                     Log.Info("balloonSizes, key: " + key + ", not found");
@@ -329,6 +348,8 @@ namespace KerBalloons
             if (lastBalloonSize != balloonSize)
             {
                 lastBalloonSize = balloonSize;
+                UpdatePersistentData();
+
                 ConfigureWinPos();
             }
         }
@@ -531,7 +552,7 @@ namespace KerBalloons
                 if (t.gameObject.name == withName)
                 {
                     if (cnt++ == balloonSize)
-                    return t.gameObject;
+                        return t.gameObject;
                 }
             return null;
         }
@@ -547,10 +568,20 @@ namespace KerBalloons
         {
             string moreInfoText;
             moreInfoText = "Recommended Body: " + bodyName;
+            moreInfoText += "\nBalloon Size: Size" + balloonSize;
             moreInfoText = moreInfoText + "\nMin pressure: " + minAtmoPressure.ToString() + "kPa";
             moreInfoText = moreInfoText + "\nMax pressure: " + maxAtmoPressure.ToString() + "kPa";
             moreInfoText = moreInfoText + "\nMax lift: " + maxLift.ToString() + "kN";
-            moreInfoText = moreInfoText + "\nMax payload " + "(" + bodyName + "): " + (Mathf.Floor((maxLift / bodyG) * 1000) / 1000).ToString() + "t" + " (at " + maxAtmoPressure + "kPa)";
+            moreInfoText = moreInfoText + "\nMax payload " + "(" + bodyName + "): ";
+            moreInfoText += "\n  at Max pressure: " +
+                (maxLift / bodyG).ToString("F3") + "t" + " (at " + maxAtmoPressure + "kPa)";
+            moreInfoText += "\n  at Min pressure: " +
+                (minLift / bodyG).ToString("F3") + "t" + " (at " + maxAtmoPressure + "kPa)";
+
+
+
+            //(Mathf.Floor((maxLift / bodyG) * 1000) / 1000).ToString() + "t" + " (at " + maxAtmoPressure + "kPa)";
+
             // + " (" + (Mathf.Floor((minLift / bodyG) * 1000) / 1000).ToString() + "t)";
             //moreInfoText = moreInfoText + "\n  At max pressure: " + (Mathf.Floor((maxLift/bodyG)*1000)/1000).ToString() + "t";
             //moreInfoText = moreInfoText + "\n  At min pressure: " + (Mathf.Floor((minLift / bodyG) * 1000) / 1000).ToString() + "t";
@@ -592,6 +623,8 @@ namespace KerBalloons
             //I know about FlightGlobal.Bodies() but for some reason when I use it in this function the game freezes on load
             //Also it can't be put in OnStart() because that isn't called until the part is created
             bodyName = recommendedBody;
+            bodyG = GetBodyG(recommendedBody);
+
 #if false
             if (recommendedBody == "Sun") bodyG = 17.1f;
             if (recommendedBody == "Kerbin") bodyG = 9.81f;

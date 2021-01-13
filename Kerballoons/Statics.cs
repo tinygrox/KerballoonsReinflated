@@ -4,6 +4,7 @@ using System.Linq;
 using System.IO;
 using UnityEngine;
 using KSP_Log;
+using static KerBalloons.Statics;
 
 namespace KerBalloons
 {
@@ -66,6 +67,11 @@ namespace KerBalloons
             info.CFGliftPointObject = values[20];
             info.CFGballoonPointObject = values[21];
 
+            Statics.Log.Info("payload: " + info.payload + ", body: " + info.recommendedBody + ", techRequired: " + info.techRequired +
+                ", minAtmoP: " + info.minAtmoPressure.ToString("F3") + ", maxAtmoP: " + info.maxAtmoPressure.ToString("F3") +
+                ", minScale: " + info.minScale + ", maxScale: " + info.maxScale + ", minLift: " + info.minLift + ", maxLift: " + info.maxLift +
+                ", speedlimiter: " + info.speedLimiter + ", maxSpeed: " + info.maxSpeed + ", maxSpeedTolerence: " + info.maxSpeedTolerence +
+                ", speedAdjustMin: " + info.speedAdjustMin + ", speedAdjustMax: " + info.speedAdjustMax);
             return info;
         }
     }
@@ -86,7 +92,11 @@ namespace KerBalloons
     public static class Statics
     {
         public static Dictionary<string, BalloonSize> balloonSizes = new Dictionary<string, BalloonSize>();
+#if DEBUG
         public static Log Log = new Log("KerBalloon", Log.LEVEL.INFO);
+#else
+        public static Log Log = new Log("KerBalloon", Log.LEVEL.ERROR);
+#endif
         public static float SafeParse(string value, float oldvalue)
         {
             try { return float.Parse(value); }

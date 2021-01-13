@@ -1,6 +1,10 @@
 ChangeLog
 
-0.5.0.1 (unreleased)
+0.5.0.2
+	Fixed calculations of max lift
+	Added the min lift at max altitude
+
+0.5.0.1
 	Removed  3 .mu files, now having B9 do the rescaling
 
 0.5.0
