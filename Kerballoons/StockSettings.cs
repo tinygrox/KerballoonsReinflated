@@ -33,6 +33,15 @@ namespace KerBalloons
             toolTip = "Use alternate skin")]
         public bool altskin = false;
 
+        [GameParameters.CustomParameterUI("Enable Speed Limiter",
+                    toolTip = "Limit the top speed of the balloon")]
+        public bool speedLimiterEnabled = true;
+
+        [GameParameters.CustomParameterUI("Log data in mod folder",
+                    toolTip = "If true, will save to folder KerBalloons/LogData, if false,\n" +
+            "will save in the save folder:  saves/<save>/KerBalloonDataLogs")]
+        public bool saveInModFolder = false;
+
 
 
         public override void SetDifficultyPreset(GameParameters.Preset preset)

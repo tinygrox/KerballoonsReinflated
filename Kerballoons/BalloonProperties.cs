@@ -20,7 +20,7 @@ namespace KerBalloons
             lift *= liftLimit * thisBalloon.targetTWR;
             
 
-            if (thisBalloon.speedLimiter)
+            if (thisBalloon.speedLimiter && HighLogic.CurrentGame.Parameters.CustomParams<KerBSettings>().speedLimiterEnabled)
             {
                 if (thisBalloon.vessel.verticalSpeed < thisBalloon.maxSpeed * (1 - thisBalloon.maxSpeedTolerence))
                 {

@@ -1,5 +1,11 @@
 ChangeLog
 
+0.5.0.5
+	Fixed values when in the editor in symmetry mode (symmetric parts weren't getting updated properly)
+	Added option to ignore speed limiter (in stock settings)
+	Added option to have datalogs go either in mod dir or game dir (in stock settings)
+	Fixed display of Max payload at min pressure
+
 0.5.0.4
 	Fixed issue with symmetric parts config window 
 	Fixed issue with showing config window for multiple parts

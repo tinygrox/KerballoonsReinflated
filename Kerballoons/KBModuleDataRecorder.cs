@@ -120,13 +120,21 @@ namespace KerBalloons
 
 		public void DoReset()
 		{
+			string SaveDir = "GameData/KerBalloons/LogData/";
+			if (!HighLogic.CurrentGame.Parameters.CustomParams<KerBSettings>().saveInModFolder)
+			{
+				SaveDir = KSPUtil.ApplicationRootPath + "saves/" + HighLogic.SaveFolder + "/KerBalloonDataLogs/";
+			}
+				if (!Directory.Exists(SaveDir))
+					Directory.CreateDirectory(SaveDir);
+
 			anim.Stop();
 			DateTime now = DateTime.Now;
 			optionstring = "";
 			dateFormat = "MM'-'dd'-'yyyy HH'-'mm'-'ss";
 			hourFormat = "HH':'mm':'ss";
 			saveFile = base.vessel.mainBody.ToString() + "-" + now.ToString(dateFormat) + ".csv";
-			saveFile = "GameData/KerBalloons/LogData/" + saveFile;
+			saveFile = SaveDir + saveFile;
 			EnvSensor = base.vessel.FindPartModulesImplementing<ModuleEnviroSensor>();
 			headerCreated = false;
 			foreach (ModuleEnviroSensor item in EnvSensor)

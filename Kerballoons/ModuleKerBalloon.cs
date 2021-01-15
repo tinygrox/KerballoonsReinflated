@@ -170,12 +170,14 @@ namespace KerBalloons
 
         [KSPField(isPersistant = true)]
         int lastBalloonSize = 0;
+
         Rect infoRect = new Rect(0, 0, 400, 400);
         Rect winRect = new Rect(0, 0, 400, 200);
         int winId = WindowHelper.NextWindowId("ModuleKerBalloonConfig");
         int infoId = WindowHelper.NextWindowId("ModuleKerBalloonInfo");
         bool visibleShowInfo = false;
         bool visibleConfig = false;
+
         [KSPEvent(guiActive = false, guiActiveEditor = true, guiName = "Configure Balloon")]
         public void ConfigureBalloon()
         {
@@ -217,7 +219,7 @@ namespace KerBalloons
             }
             if (visibleConfig && HighLogic.LoadedSceneIsEditor)
             {
-                if (!visibleShowInfo && !HighLogic.CurrentGame.Parameters.CustomParams<KerBSettings>().altskin)
+                if (!HighLogic.CurrentGame.Parameters.CustomParams<KerBSettings>().altskin)
                     GUI.skin = HighLogic.Skin;
                 winRect = ClickThruBlocker.GUILayoutWindow(winId, winRect, ConfigBalloonWin, "KerBalloon");
             }
@@ -239,37 +241,57 @@ namespace KerBalloons
             } else bodyG =                 (float)PhysicsGlobals.GravitationalAcceleration;
             return bodyG;
         }
+
         void SetValues(BalloonInfo b)
         {
             Log.Info("SetValues");
-            Log.Info("payload: " + b.payload + ", body: " + b.recommendedBody + ", techRequired: " + b.techRequired +
-                ", minAtmoP: " + b.minAtmoPressure.ToString("F3") + ", maxAtmoP: " + b.maxAtmoPressure.ToString("F3") +
-                ", minScale: " + b.minScale + ", maxScale: " + b.maxScale + ", minLift: " + b.minLift + ", maxLift: " + b.maxLift +
-                ", speedlimiter: " + b.speedLimiter + ", maxSpeed: " + b.maxSpeed + ", maxSpeedTolerence: " + b.maxSpeedTolerence +
-                ", speedAdjustMin: " + b.speedAdjustMin + ", speedAdjustMax: " + b.speedAdjustMax);
+            //Log.Info("payload: " + b.payload + ", body: " + b.recommendedBody + ", techRequired: " + b.techRequired +
+            //    ", minAtmoP: " + b.minAtmoPressure.ToString("F3") + ", maxAtmoP: " + b.maxAtmoPressure.ToString("F3") +
+            //    ", minScale: " + b.minScale + ", maxScale: " + b.maxScale + ", minLift: " + b.minLift + ", maxLift: " + b.maxLift +
+            //  ", speedlimiter: " + b.speedLimiter + ", maxSpeed: " + b.maxSpeed + ", maxSpeedTolerence: " + b.maxSpeedTolerence +
+            //  ", speedAdjustMin: " + b.speedAdjustMin + ", speedAdjustMax: " + b.speedAdjustMax);
 
-            recommendedBody = b.recommendedBody;
-            bodyG = GetBodyG(recommendedBody);
-            Log.Info("recommendedBody: " + b.recommendedBody + ", bodyName: " + recommendedBody + ", bodyG: " + bodyG);
-            minAtmoPressure = b.minAtmoPressure;
-            maxAtmoPressure = b.maxAtmoPressure;
-            minScale = b.minScale;
-            maxScale = b.maxScale;
-            minLift = b.minLift;
-            maxLift = b.maxLift;
-            targetTWR = b.targetTWR;
-            speedLimiter = b.speedLimiter;
-            maxSpeed = b.maxSpeed;
-            maxSpeedTolerence = b.maxSpeedTolerence;
-            speedAdjustStep = b.speedAdjustStep;
-            speedAdjustMin = b.speedAdjustMin;
-            speedAdjustMax = b.speedAdjustMax;
-            CFGballoonObject = b.CFGballoonObject;
-            CFGropeObject = b.CFGropeObject;
-            CFGcapObject = b.CFGcapObject;
-            CFGliftPointObject = b.CFGliftPointObject;
-            CFGballoonPointObject = b.CFGballoonPointObject;
+            foreach (var p in part.symmetryCounterparts)
+            {
+                var m = p.FindModuleImplementing<ModuleKerBalloon>();
+                SetSymmetryValues(balloonSize, m, b, selectedPlanet, payload);
+            }
+            SetSymmetryValues(balloonSize, this, b, selectedPlanet, payload) ;
+        }
 
+        void SetSymmetryValues(int balloonSize, ModuleKerBalloon mkb, BalloonInfo b, int selectedPlanet, string payload)
+        {
+            Log.Info("SetSymmetryValues, persistentId: " + mkb.part.persistentId);
+
+            mkb.balloonSize = balloonSize;
+            mkb.lastBalloonSize = lastBalloonSize;
+            mkb.recommendedBody = b.recommendedBody;
+            mkb.bodyG = GetBodyG(recommendedBody);
+            //Log.Info("recommendedBody: " + b.recommendedBody + ", bodyName: " + recommendedBody + ", bodyG: " + bodyG);
+            mkb.minAtmoPressure = b.minAtmoPressure;
+            mkb.maxAtmoPressure = b.maxAtmoPressure;
+            mkb.minScale = b.minScale;
+            mkb.maxScale = b.maxScale;
+            mkb.minLift = b.minLift;
+            mkb.maxLift = b.maxLift;
+            mkb.targetTWR = b.targetTWR;
+            mkb.liftLimit = liftLimit;
+            mkb.speedLimiter = b.speedLimiter;
+            mkb.maxSpeed = b.maxSpeed;
+            mkb.maxSpeedTolerence = b.maxSpeedTolerence;
+            mkb.speedAdjustStep = b.speedAdjustStep;
+            mkb.speedAdjustMin = b.speedAdjustMin;
+            mkb.speedAdjustMax = b.speedAdjustMax;
+            mkb.CFGballoonObject = b.CFGballoonObject;
+            mkb.CFGropeObject = b.CFGropeObject;
+            mkb.CFGcapObject = b.CFGcapObject;
+            mkb.CFGliftPointObject = b.CFGliftPointObject;
+            mkb.CFGballoonPointObject = b.CFGballoonPointObject;
+
+
+            mkb.payload = payload;
+            mkb.selectedPayload = selectedPayload;
+            mkb.bodyName = b.recommendedBody;
         }
 
 
@@ -599,6 +621,7 @@ namespace KerBalloons
             visibleShowInfo = !visibleShowInfo;
             availPlanets.Clear();
             availPayloads.Clear();
+            infoId = WindowHelper.NextWindowId("ModuleKerBalloonInfo" + part.persistentId);
         }
 
         Vector2 infoPos;
