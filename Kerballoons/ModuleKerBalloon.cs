@@ -637,7 +637,7 @@ namespace KerBalloons
             moreInfoText += "\n  at Max pressure: " +
                 (maxLift / bodyG).ToString("F3") + "t" + " (at " + maxAtmoPressure + "kPa)";
             moreInfoText += "\n  at Min pressure: " +
-                (minLift / bodyG).ToString("F3") + "t" + " (at " + maxAtmoPressure + "kPa)";
+                (minLift / bodyG).ToString("F3") + "t" + " (at " + minAtmoPressure + "kPa)";
 
 
 
