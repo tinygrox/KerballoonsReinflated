@@ -175,16 +175,31 @@ namespace KerBalloons
         int winId = WindowHelper.NextWindowId("ModuleKerBalloonConfig");
         int infoId = WindowHelper.NextWindowId("ModuleKerBalloonInfo");
         bool visibleShowInfo = false;
-        bool visible = false;
+        bool visibleConfig = false;
         [KSPEvent(guiActive = false, guiActiveEditor = true, guiName = "Configure Balloon")]
         public void ConfigureBalloon()
         {
-            ConfigureWinPos();
+            ConfigureWinPos(true);
         }
 
-        void ConfigureWinPos()
+        static readonly object locked = new object();
+
+        void ConfigureWinPos(bool ignoreLock = false)
         {
-            visible = true;
+            if (!ignoreLock)
+            {
+                uint activePartId = part.persistentId;
+                lock (locked)
+                {
+                    foreach (var p in part.symmetryCounterparts)
+                    {
+                        if (p.persistentId < activePartId)
+                            return;
+                    }
+                }
+            }
+            winId = WindowHelper.NextWindowId("ModuleKerBalloonConfig" + part.persistentId);
+            visibleConfig = true;
             winRect.x = Mouse.screenPos.x;
             winRect.y = Mouse.screenPos.y;
 
@@ -200,7 +215,7 @@ namespace KerBalloons
                     GUI.skin = HighLogic.Skin;
                 infoRect = ClickThruBlocker.GUILayoutWindow(infoId, infoRect, InfoBalloonWin, "KerBalloon");
             }
-            if (visible && HighLogic.LoadedSceneIsEditor)
+            if (visibleConfig && HighLogic.LoadedSceneIsEditor)
             {
                 if (!visibleShowInfo && !HighLogic.CurrentGame.Parameters.CustomParams<KerBSettings>().altskin)
                     GUI.skin = HighLogic.Skin;
@@ -263,6 +278,8 @@ namespace KerBalloons
 
         List<string> availPayloads = new List<string>();
         int selectedPayload = 0;
+
+
         void ConfigBalloonWin(int id)
         {
             GUILayout.BeginHorizontal();
@@ -337,7 +354,7 @@ namespace KerBalloons
             }
             GUILayout.FlexibleSpace();
             if (GUILayout.Button("Close"))
-                visible = false;
+                visibleConfig = false;
             GUI.DragWindow();
         }
 
@@ -580,6 +597,8 @@ namespace KerBalloons
         public void ShowInfo()
         {
             visibleShowInfo = !visibleShowInfo;
+            availPlanets.Clear();
+            availPayloads.Clear();
         }
 
         Vector2 infoPos;

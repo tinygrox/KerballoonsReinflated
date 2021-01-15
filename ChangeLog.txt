@@ -1,5 +1,9 @@
 ChangeLog
 
+0.5.0.4
+	Fixed issue with symmetric parts config window 
+	Fixed issue with showing config window for multiple parts
+
 0.5.0.3
 	Fixed missing rope when returning to vessel  (using AirPark)
 
