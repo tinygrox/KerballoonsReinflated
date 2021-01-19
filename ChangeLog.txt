@@ -1,5 +1,8 @@
 ChangeLog
 
+0.5.0.7
+	Fixed partIcon in files to be universalBalloonHP
+	
 0.5.0.6
 	Fixed display of Max payload at min pressure correctly this time
 
