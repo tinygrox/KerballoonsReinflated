@@ -1,5 +1,8 @@
 ChangeLog
 
+0.5.0.8
+	Test build changing part.AddForceAtPosition to part.Rigidbody.AddForceAtPosition, needed for Principia 
+
 0.5.0.7
 	Fixed partIcon in files to be universalBalloonHP
 	
