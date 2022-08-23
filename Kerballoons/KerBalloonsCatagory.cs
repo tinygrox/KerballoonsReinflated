@@ -49,6 +49,13 @@ namespace Kerballoons
                 GameEvents.onGUIEditorToolbarReady.Add(SubCategories);
         }
 
+        void OnDestroy()
+        {
+            if (parts.Count > 0)
+                GameEvents.onGUIEditorToolbarReady.Remove(SubCategories);
+
+        }
+
         private bool EditorItemsFilter(AvailablePart avPart)
         {
             return parts.Contains(avPart);
