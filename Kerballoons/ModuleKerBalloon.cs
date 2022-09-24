@@ -6,6 +6,7 @@ using ClickThroughFix;
 using SpaceTuxUtility;
 using B9PartSwitch;
 using static KerBalloons.Statics;
+using KSP.Localization;
 
 namespace KerBalloons
 {
@@ -84,7 +85,7 @@ namespace KerBalloons
         [KSPField(isPersistant = true)]
         public string bodyName;
         [KSPField(isPersistant = true)]
-        public string payload = "Standard";
+        public string payload = Local.Module_Payload_Standard; // "Standard"
         [KSPField(isPersistant = false)]
         public float bodyG;
 
@@ -178,7 +179,7 @@ namespace KerBalloons
         bool visibleShowInfo = false;
         bool visibleConfig = false;
 
-        [KSPEvent(guiActive = false, guiActiveEditor = true, guiName = "Configure Balloon")]
+        [KSPEvent(guiActive = false, guiActiveEditor = true, guiName = "#KerBalloons_Module_Configure")]  // Configure Balloon
         public void ConfigureBalloon()
         {
             ConfigureWinPos(true);
@@ -375,7 +376,7 @@ namespace KerBalloons
                 UpdatePersistentData();
             }
             GUILayout.FlexibleSpace();
-            if (GUILayout.Button("Close"))
+            if (GUILayout.Button(Local.Generic_Close)) // "Close"
                 visibleConfig = false;
             GUI.DragWindow();
         }
@@ -515,7 +516,7 @@ namespace KerBalloons
         public Vector3 initialBalloonPos;
         public Vector3 initialRopeScale;
 
-        [KSPEvent(active = false, guiActive = false, guiActiveEditor = false, guiActiveUnfocused = true, unfocusedRange = 4, externalToEVAOnly = true, guiName = "Repack Balloon")]
+        [KSPEvent(active = false, guiActive = false, guiActiveEditor = false, guiActiveUnfocused = true, unfocusedRange = 4, externalToEVAOnly = true, guiName = "#KerBalloons_Module_RepackBalloon")]  // Repack Balloon
         public void repackBalloon()
         {
             isInflated = false;
@@ -540,7 +541,7 @@ namespace KerBalloons
             Actions["deflateAction"].active = false;
         }
 
-        [KSPEvent(active = true, guiActive = true, guiActiveEditor = false, guiActiveUnfocused = false, guiName = "Inflate Balloon")]
+        [KSPEvent(active = true, guiActive = true, guiActiveEditor = false, guiActiveUnfocused = false, guiName = "#KerBalloons_Module_InflateBalloon")]  // Inflate Balloon
         public void inflateBalloon()
         {
             if (!isInflated)
@@ -561,21 +562,21 @@ namespace KerBalloons
 
                     if (currentPressure <= 0)
                     {
-                        ScreenMessages.PostScreenMessage("Cannot inflate balloon in vacuum", 3, ScreenMessageStyle.UPPER_CENTER);
+                        ScreenMessages.PostScreenMessage(Local.ScreenMessage_PressureZero, 3, ScreenMessageStyle.UPPER_CENTER);  // "Cannot inflate balloon in vacuum"
                     }
                     else if (currentPressure < minAtmoPressure)
                     {
-                        ScreenMessages.PostScreenMessage("Cannot Inflate: Air pressure too low", 3, ScreenMessageStyle.UPPER_CENTER);
+                        ScreenMessages.PostScreenMessage(Local.ScreenMessage_PressureLow, 3, ScreenMessageStyle.UPPER_CENTER);  // "Cannot Inflate: Air pressure too low"
                     }
                     else if (currentPressure > maxAtmoPressure)
                     {
-                        ScreenMessages.PostScreenMessage("Cannot Inflate: Air pressure too high", 3, ScreenMessageStyle.UPPER_CENTER);
+                        ScreenMessages.PostScreenMessage(Local.ScreenMessage_PressureHigh, 3, ScreenMessageStyle.UPPER_CENTER); // "Cannot Inflate: Air pressure too high"
                     }
                 }
             }
         }
 
-        [KSPEvent(active = false, guiActive = true, guiActiveEditor = false, guiActiveUnfocused = false, guiName = "Deflate Balloon")]
+        [KSPEvent(active = false, guiActive = true, guiActiveEditor = false, guiActiveUnfocused = false, guiName = "#KerBalloons_Module_DeflateBalloon")] // Deflate Balloon
         public void deflateBalloon()
         {
             if (isInflated)
@@ -588,14 +589,14 @@ namespace KerBalloons
             }
         }
 
-        [KSPAction("Inflate Balloon")]
+        [KSPAction("#KerBalloons_Module_InflateBalloon")]  // Inflate Balloon
         public void inflateAction(KSPActionParam param)
         {
             inflateBalloon();
             Actions["inflateAction"].active = false;
         }
 
-        [KSPAction("Deflate Balloon")]
+        [KSPAction("#KerBalloons_Module_DeflateBalloon")] // Deflate Balloon
         public void deflateAction(KSPActionParam param)
         {
             deflateBalloon();
@@ -615,7 +616,7 @@ namespace KerBalloons
             return null;
         }
 
-        [KSPEvent(active = true, guiActive = true, guiActiveEditor = true, guiName = "Show Balloon Info")]
+        [KSPEvent(active = true, guiActive = true, guiActiveEditor = true, guiName = "#KerBalloons_Module_ShowBalloonInfo")] // Show Balloon Info
         public void ShowInfo()
         {
             visibleShowInfo = !visibleShowInfo;
@@ -628,9 +629,9 @@ namespace KerBalloons
         void InfoBalloonWin(int id)
         {
             string moreInfoText;
-            moreInfoText = "Recommended Body: " + bodyName;
-            moreInfoText += "\nBalloon Size: Size" + balloonSize;
-            moreInfoText = moreInfoText + "\nMin pressure: " + minAtmoPressure.ToString() + "kPa";
+            moreInfoText = Localizer.Format("#KerBalloons_Module_BalloonInfo_PartI", bodyName);  // "Recommended Body: " + bodyName
+            moreInfoText += "\n"+ Localizer.Format("#KerBalloons_Module_BalloonInfo_PartII", balloonSize);  // "Balloon Size: Size" + balloonSize
+            moreInfoText = moreInfoText + "\n"+Localizer.Format("#KerBalloons_Module_BalloonInfo_PartIII", minAtmoPressure.ToString()); // "Min pressure: " + minAtmoPressure.ToString() + "kPa"
             moreInfoText = moreInfoText + "\nMax pressure: " + maxAtmoPressure.ToString() + "kPa";
             moreInfoText = moreInfoText + "\nMax lift: " + maxLift.ToString() + "kN";
             moreInfoText = moreInfoText + "\nMax payload " + "(" + bodyName + "): ";
@@ -673,7 +674,7 @@ namespace KerBalloons
             GUILayout.TextArea(moreInfoText);
             GUILayout.EndScrollView();
 
-            if (GUILayout.Button("Close"))
+            if (GUILayout.Button(Local.Generic_Close))  // "Close"
                 visibleShowInfo = false;
             GUILayout.EndVertical();
             GUILayout.EndHorizontal();

@@ -57,16 +57,16 @@ namespace KerBalloons
 
 		private List<PartResourceDefinition> consumedResources;
 
-		[KSPField(guiName = "Recording Frequency", guiActiveEditor = true, guiActive = true, isPersistant = true, guiUnits = "seconds")]
+		[KSPField(guiName = "#KerBalloons_DataRecorder_RecordFreq", guiActiveEditor = true, guiActive = true, isPersistant = true, guiUnits = "#KerBalloons_DataRecorder_RecordFreq_units")] // Recording Frequency | seconds
 		[UI_FloatRange(minValue = 1f, maxValue = 60f, scene = UI_Scene.All, stepIncrement = 1f)]
 		public float recordingSeconds = 1f;
 
-		[KSPField(guiName = "Record", guiActiveEditor = true, guiActive = true, isPersistant = true)]
-		[UI_Toggle(controlEnabled = true, disabledText = "Off", enabledText = "On", invertButton = false, scene = UI_Scene.All)]
+		[KSPField(guiName = "#KerBalloons_DataRecorder_Record", guiActiveEditor = true, guiActive = true, isPersistant = true)] // Record
+		[UI_Toggle(controlEnabled = true, disabledText = "#KerBalloons_DataRecorder_Record_Off", enabledText = "#KerBalloons_DataRecorder_Record_On", invertButton = false, scene = UI_Scene.All)] // Off | On
 		public bool recordingActive = false;
 
-		[KSPField(guiName = "Status", guiUnits = "", guiActive = true, guiFormat = "F3")]
-		public string readoutInfo = "Ready";
+		[KSPField(guiName = "#KerBalloons_DataRecorder_Status", guiUnits = "", guiActive = true, guiFormat = "F3")]  //Status
+		public string readoutInfo = "Ready";  // Local.DataRecorder_Status_Ready
 
 		[KSPField]
 		public string animationName = "";

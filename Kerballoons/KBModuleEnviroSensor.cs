@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using KSP.Localization;
 
 namespace KerBalloons
 {
@@ -15,8 +16,8 @@ namespace KerBalloons
 		[KSPField]
 		public SensorType sensorType;
 
-		[KSPField(guiName = "Data", guiUnits = "", guiActive = true)]
-		public string readoutInfo = "Off";
+		[KSPField(guiName = "#KerBalloons_EnviroSensor_Data", guiUnits = "", guiActive = true)] // Data
+		public string readoutInfo = "Off"; // Local.EnviroSensor_Data_Off;
 
 		[KSPField(isPersistant = true)]
 		public bool sensorActive;
@@ -28,7 +29,7 @@ namespace KerBalloons
 			return consumedResources;
 		}
 
-		[KSPEvent(guiName = "Toggle Display", guiActive = true)]
+		[KSPEvent(guiName = "#KerBalloons_EnviroSensor_Toggle", guiActive = true)] // Toggle Display
 		public void Toggle()
 		{
 			sensorActive = !sensorActive;
@@ -86,12 +87,12 @@ namespace KerBalloons
 							readoutInfo = base.vessel.atmDensity.ToString();
 							break;
 						case SensorType.SEXT:
-							readoutInfo = "Lat: " + base.vessel.latitude.ToString() + " Long: " + base.vessel.longitude;
+							readoutInfo = Localizer.Format("#KerBalloons_EnviroSensor_SEXT", base.vessel.latitude, base.vessel.longitude);  // "Lat: " + base.vessel.latitude.ToString() + " Long: " + base.vessel.longitude
 							break;
 						}
 					}
 				}
-				else if (readoutInfo != "Inactive")
+				else if (readoutInfo != "Inactive")  // 
 				{
 					readoutInfo = "Active";
 				}
